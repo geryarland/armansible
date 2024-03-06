@@ -1,0 +1,16 @@
+---
+- name: Install NFS server
+  hosts: main_server
+  become: true
+  tasks:
+    - name: Install NFS server
+      package:
+        name: nfs-kernel-server
+        state: present
+
+    - name: Start NFS server
+      service:
+        name: nfs-kernel-server
+        state: started
+        enabled: yes
+

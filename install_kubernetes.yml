@@ -1,0 +1,66 @@
+---
+
+- hosts: main_server
+  become: true
+  tasks:
+
+  - name: Update apt cache
+    apt:
+      update_cache: yes
+
+  - name: Installing Prerequisites for Kubernetes
+    apt:
+      name:
+        - apt-transport-https
+        - ca-certificates
+        - curl
+        - gnupg-agent
+        - vim
+        - software-properties-common
+      state: present
+
+  - name: Add Google official GPG key
+    apt_key:
+      url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+      state: present
+
+  - name: Add Kubernetes GPG key to apt keyring
+    shell: curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.28/deb/Release.key | sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/kubernetes-apt-keyring.gpg
+
+
+  - name: Add Kubernetes Repository
+    apt_repository:
+      repo: "deb [signed-by=/etc/apt/trusted.gpg.d/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.28/deb/ /"
+      state: present
+      filename: kubernetes
+      mode: 0600
+
+
+  - name: install kubelet
+    apt:
+      name: kubelet
+      state: present
+      update_cache: true
+
+  - name: install kubeadm
+    apt:
+      name: kubeadm
+      state: present
+
+  - name: install kubectl
+    apt:
+      name: kubectl
+      state: present
+      force: yes
+
+  - name: Enable service kubelet, and enable persistently
+    service:
+      name: kubelet
+      enabled: yes
+
+  - name: Reboot all the kubernetes nodes.
+    reboot:
+      post_reboot_delay: 10
+      reboot_timeout: 40
+      connect_timeout: 60
+      test_command: uptime
