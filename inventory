@@ -1,8 +1,8 @@
 [main_server]
-ger@5.6.7.123
+ger@5.6.7.130
 
 [server1]
-serv1@5.6.7.124
+serv1@5.6.7.129
 
 [server2]
-serv2@5.6.7.125
+serv2@5.6.7.127
