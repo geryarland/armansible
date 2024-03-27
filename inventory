@@ -1,8 +1,8 @@
-[main_server]
-ger@5.6.7.130
+[master]
+master@5.6.7.141
 
-[server1]
-serv1@5.6.7.129
+[worker1]
+worker1@5.6.7.120
 
-[server2]
-serv2@5.6.7.127
+[worker2]
+worker2@5.6.7.119
