@@ -1,8 +1,7 @@
 [master]
-master@5.6.7.141
+ger@5.6.7.148
 
 [worker1]
-worker1@5.6.7.120
+serv1@5.6.7.147
 
-[worker2]
-worker2@5.6.7.119
+
